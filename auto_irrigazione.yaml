@@ -84,10 +84,6 @@
   trigger:
   - platform: state
     entity_id: sensor.meteo_openweathermap_forecast_precipitation
-  condition:
-    condition: numeric_state
-    entity_id: sensor.meteo_openweathermap_forecast_precipitation
-    above: input_number.pioggia_oggi
   action:
   - service: input_number.set_value
     data_template:
