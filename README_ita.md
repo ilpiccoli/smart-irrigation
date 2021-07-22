@@ -1,52 +1,50 @@
-## **Versione in italiano (in aggiornamento)**
+## **Versione in italiano**
 # Smart Irrigation V1.0
-(English version - Versione in Italiano [qui](https://github.com/ilpiccoli/smart-irrigation/blob/main/README_ita.md))
 
-I've been looking for weeks for a good and simple automation to water my plants on my terrace. I've been using a classic battery-powered irrigation control unit and it worked smoothly but it had two main downsides: 
-1) It could not stop if it was raining (or if it rained the day before), so in rainy days water dripped from my terrace (and i was wasting liters of water for nothing);
-2) It had limited possibilities in facts of programmability, but above all i had to run water for the same amount of minutes every day, independently from weather conditions.
-I found some options but they were either too complex or too grass-oriented (i water my plants for about 1 to 3 minutes per day, while those programs suggested me to water for more than 10 minutes/day), so i developed myself a very simple and customizable automation in HomeAssistant.
+Ho cercato per settimane un'automazione che funzionasse bene ma fosse al tempo stesso semplice per irrigare le piante sul mio terrazzo. Fino ad ora ho usato una centralina di irrigazione a betteria e ha sempre funzionato perfettamente, ma aveva due difetti: 
+1) Non saltava il turno di irrigazione nel caso stia piovendo (o abbia piovuto il giorno prima), quindi nei giorni di pioggia il terrazzo grondava acqua (e sprecavo litri di acqua senza alcun motivo);
+2) Aveva possibilità limitate in fatto di programmazione, ma soprattutto irrigava ogni giorno per lo stesso tempo, indipendentemente dalle condizioni meteo.
+Ho trovato alcune alternative ma erano o troppo complicate o progettate per il giardino (irrigo le mie piante da 1 a 3 minuti al giorno, mentre quei programmi mi suggerivano di irrigare per più di 10 minuti al giorno), quindi ho creato questa automazione su HomeAssistant, personalizzabile e molto semplice.
 
-# Pre-Requisites
-- I use this automation to control my Shelly 1 connected to a normally closed solenoid-valve, when i turn on the Shelly the valve opens. You would need some sort of switch connected to homeassistant you can turn on/open, as you can see it's very simple to modify and adapt this automation to your necessity, as it is straightforward;
-- **OpenWeatherMap integration configured and working**, you just need to register and get an API, it's very easy, for any information you can [refer to the integration page](https://www.home-assistant.io/integrations/openweathermap/) ;
-- You would need some helpers, in particular:
-  - **An _input_number_ to determine the default duration of irrigation** (in my case it's called _input_number.durata_irrigazione_);
-  - **An _input_number_ that will be used to record the highest temperature of today** (in my case it's called _input_number.temperatura_massima_oggi_ and it has step 1);
-  - **An _input_number_ that will be used to record the highest temperature of yesterday** (in my case it's called _input_number.temperatura_massima_ieri_ and it has step 1);
-  - **An _input_number_ that will be used to record the rain forecast for today** (in my case it's called _input_number.pioggia_oggi_ and it has step 0.1);
-  - **An _input_number_ that will be used to record the rain precipitation of yesterday** (in my case it's called _input_number.pioggia_ieri_ and it has step 0.1).
-- You need **an _history_stats_ sensor that will be used in the notification** to let you know for how long the switch has been powered on (in my case it's called _sensor.irrigazione_terrazzo_oggi_).
+# Pre-Requisiti
+- Uso questa automazione per controllare il mio Shelly 1 connesso ad un'elettrovalvola normalmente chiusa, quando lo Shelly si accende, la valvola si apre. Avrete bisogno di un interruttore/centralina che possiate controllare tramite homeassistant, come vedrete è semplicissimo modificare l'automazione per adattarla alle vostre necessità;
+- **L'integrazione OpenWeatherMap configurata e funzionante**, è necessario registrarsi e ottenere un API, è molto semplice, per ogni informazione potete visitare la [pagina dell'integrazione](https://www.home-assistant.io/integrations/openweathermap/) ;
+- Avrete bisogno di alcuni aiutanti, in particolare:
+  - **Un _input_number_ per la durata base dell'irrigazione** (nel mio caso si chiama _input_number.durata_irrigazione_);
+  - **Un _input_number_ che verrà usato per registrare la temperatura massima di oggi** (nel mio caso si chiama _input_number.temperatura_massima_oggi_ e ha passo 1);
+  - **Un _input_number_ che verrà usato per registrare la temperatura massima di ieri** (nel mio caso si chiama _input_number.temperatura_massima_ieri_ e ha passo 1);
+  - **Un _input_number_ che verrà usato per registrare la pioggia prevista per oggi** (nel mio caso si chiama _input_number.pioggia_oggi_ e ha passo 0.1);
+  - **Un _input_number_ che verrà usato per registrare le precipitazioni di ieri** (nel mio caso si chiama _input_number.pioggia_ieri_ e ha passo 0.1).
+- Avrete bisogno **un sensore _history_stats_ che verrà usato nella notifica** per dirvi per quanto la presa è rimasta accesa la presa (nel mio caso si chiama _sensor.irrigazione_terrazzo_oggi_).
 
-# Configuration
-0) You need to have the Shelly connected to HomeAssistant (in my case it's called _switch.irrigazione_terrazzo_) and the OpenWeatherMap integration configured;
-1) You need to copy _**sensori_history_stats.yaml**_ into your sensor folder (if you [splitted your configuration](https://www.home-assistant.io/docs/configuration/splitting_configuration/)) , or you can copy its content under the _sensor:_ part in your _configuration.yaml_ file;
-2) You need to copy _**auto_irrigazione.yaml**_ into your automation folder, or you can copy its content under the _automations:_ part in your _configuration.yaml_ file;
-3) Reboot HomeAssistant;
-4) If you have done everything good you should now have a new automation showed and enabled.
+# Installazione
+0) Avrete bisogno di avere già collegato lo Shelly ad HomeAssistant (nel mio caso si chiama _switch.irrigazione_terrazzo_) e avere già configurato l'integrazione di OpenWeatherMap;
+2) Dovrete copiare _**sensori_history_stats.yaml**_ nella vostra cartella "sensor" (se avete [splittato la vostra configurazione](https://www.home-assistant.io/docs/configuration/splitting_configuration/)) , oppure potete copiare il suo contenuto sotto a _sensor:_ nel file _configuration.yaml_;
+3) Dovrete copiare _**auto_irrigazione.yaml**_ nella vostra cartella "automation", o potete copiare il suo contenuto sotto _automations:_ nel file _configuration.yaml_;
+4) Riavviate HomeAssistant;
+5) Se avete fatto tutto correttamente dovreste avere una nuova automazione già attiva.
 
-# How does it work?
-1) Every day at 00:00 the sensors of "Rain Today" and "Maximum Temperature Today" is reset;
-2) Every time the rain forecast sensor changes, the "Rain Today" sensor is updated;
-3) Every time the temperature sensor changes, if it's higher than the actual value, the "Maximum Temperature Today" sensor is updated;
-4) When the trigger condition is met (in my case when sun elevation is higher than 35°) the automation starts;
-5) If "Rain Yesterday" is higher than 4mm or "Rain Today" is higher than 2mm the automation **does not run**;
-6) The switch is switched on;
-7) The delay counter starts, based on "Maximum Temperature Yesterday", if T>30 it runs for 3 times the standard time, if T>25 for 2x, if T>20 for the standard time, else (if T<20) it runs for half the standard irrigation time;
-8) The switch is switched off;
-9) The notification is sent to the mobile app.
-10) Every day at 23:59 "Rain Yesterday" gets the value from **effective** (NB: not forecasted) rain from OpenWeatherMap and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
+# Come funziona?
+1) Ogni giorno a 00:00 il sensore "Pioggia Oggi" e "Temperatura Massima Oggi" viene resettato;
+2) Ogni volta che il sensore delle previsioni di pioggia cambia, il sensore "Pioggia Oggi" viene aggiornato;
+3) Ogni volta che il sensore temperatura cambia, se è più alto del valore, il valore "Temperatura Massima Oggi" viene aggiornato;
+4) Quanto la condizione "trigger" viene soddisfatta (nel mio caso quando quando il sole è più alto di 35°) l'automazione viene avviata;
+5) Se "Pioggia Ieri" è maggiore di 4mm o "Pioggia Domani" è maggiore di 2mm, l'automazione **non parte**;
+6) L'irrigazione viene avviata;
+7) Il contatore "delay" viene avviato, in base a "Temeperatura Massima Ieri", se T>30 dura 3 volte la durata base, se T>25 per 2 volte, se T>20 per la durata standard, altrimenti (se T<20) dura la metà della durata base;
+8) L'irrigazione viene spenta;
+9) La notifica viene inviata all'app;
+10) Ogni giorno, alle 23:59, copia il valore **effetivo** (NB: non previsto) della pioggia caduta da OpenWeatherMap e "Temperatura Massima Ieri" copia il valore "Temperatura Massima Oggi".
 
-# Known Limitations
-- **The automation is designed to work with only 1 tap/valve;**
-    - *Alternative solution: You may just create a group or add multiple switches before and after the delay to run all the taps at the same time, or you can add another   
-    sequence of on-delay-off after the last command (before the notification part).*
+# Problemi noti
+- **L'automazione è progettata per funzionare con solo 1 irrigatore;**
+    - *Soluzione alternativa: Potreste creare un gruppo o aggiungere più switch prima e dopo il delay per farli funzionare tutti in contemporanea, oppure potete aggiungere un'altra sequenza accesa-delay-spenta (prima della parte legata alla notifica)*.
     
-- **The automation is designed to run between 00:00 and 23:59, so if you start irrigation before 23:59 and stop it after 00:00 the automation won't work correctly;**        
-    - *Alternative solution: There are multiple ways to avoid this: you should set the reset automation on a different time and change the _history_stats_ sensor configuration.*    
+- **L'automazione è progettata per irrigare tra 00:00 e 23:59, se l'irrigazione parte prima delle 23:59 e finisce dopo 00:00 l'automazione non funziona correttamente;**        
+    - *Soluzione alternativa: Ci sono molti modi per evitare questo: si deve resettare a un orario diverso e cambiare la configurazione del sensore _history_stats_.*    
     
-- **The automation is designed to start only 1 time per day;**    
-    - *Alternative solution: you can add multiple triggers to trigger it based on various events or on multiple hours.*  
+- **L'automazione è progettata per irrigare solo una volta al giorno;**    
+    - *Soluzione alternativa: potete aggiungere altri trigger per fare partire l'automazione in base ad altri eventi o per avviarla in più orari.*
     
-- **The automation is designed to start when sun is over 35°, as my terrace is west-oriented and the sun hits the plants when the sun elevation is >40°;**    
-    - *Alternative solution: you can choose another trigger type, for example based on time, on event or any other trigger type.*
+- **L'automazione è progettata per partire quando l'inclinazione del sole, poichè il mio terrazzo è orientato verso ovest e il sole colpisce le piante solo quando è >40°;**    
+    - *Soluzione alternativa: potete scegliere un altro tipo, per esempio in base all'orario, a un altro evento o per altri tipi di trigger.*
