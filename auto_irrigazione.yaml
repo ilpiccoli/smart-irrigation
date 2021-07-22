@@ -1,0 +1,107 @@
+#Irrigazione Automatica Terrazzo
+- id: irrigazione_terrazzo_manuale
+  alias: Irrigazione Manuale Terrazzo
+  description: "Se l'irrigazione smart è disattivata, irriga manualmente"
+  trigger:
+      - platform: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        above: 35
+  condition:
+  - condition: numeric_state
+    entity_id: input_number.pioggia_oggi
+    below: '2'
+  - condition: numeric_state
+    entity_id: input_number.pioggia_ieri
+    below: '4'
+  action:
+  - entity_id: switch.irrigazione_terrazzo
+    service: switch.turn_on
+  - delay: >
+        {% if states('input_number.temperatura_massima_ieri')|float > 30 %}
+          00:{{(states('input_number.durata_irrigazione')|int)*3}}:00
+        {% elif states('input.number.temperatura_massima_ieri')|float > 25 %}
+          00:{{(states('input_number.durata_irrigazione')|int)*2}}:00
+        {% elif states('input_number.temperatura_massima_ieri')|float > 20 %}
+          00:{{states('input_number.durata_irrigazione')|int}}:00
+        {% else %}
+          00:{{(states('input_number.durata_irrigazione_default')|int)*0.5}}:00
+        {% endif %}
+  - entity_id: switch.irrigazione_terrazzo
+    service: switch.turn_off
+  - service: notify.mobile_app_iphone_christian
+    data:
+      title: >
+        {{ "\U0001FAB4" }} Irrigazione terrazzo
+      message: "Attivata per {{ states.sensor.irrigazione_terrazzo_oggi.attributes.value }} minuti"
+      
+#Temperatura Massima di Oggi
+- id: temp_massima_oggi
+  alias: Temperatura Massima di Oggi
+  description: "Registra il valore massimo della temperatura di oggi"
+  trigger:
+  - platform: state
+    entity_id: sensor.meteo_openweathermap_temperature
+  condition:
+    condition: numeric_state
+    entity_id: sensor.meteo_openweathermap_temperature
+    above: input_number.temperatura_massima_oggi
+  action:
+  - service: input_number.set_value
+    data_template:
+     entity_id: input_number.temperatura_massima_oggi
+     value: "{{ states('sensor.meteo_openweathermap_temperature')|float }}"
+    
+#Reset Temperatura di Oggi
+- id: reset_temp_oggi
+  alias: Reset Temperatura Massima di Oggi
+  description: "Resetta la temperatura massima registrata a mezzanotte"
+  trigger:
+  - platform: time
+    at: "00:00:00"
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.temperatura_massima_oggi
+      value: "0"
+      
+#Temperatura Massima di Ieri
+- id: temp_massima_ieri
+  alias: Temperatura Massima di Ieri
+  description: "Registra il valore massimo della temperatura di ieri, aggiornandosi alle 23:59 di ogni giorno"
+  trigger:
+  - platform: time
+    at: "23:59:00"
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.temperatura_massima_ieri
+      value: "{{states('sensor.input_number.temperatura_massima_oggi')|float}}"
+      
+#Pioggia di Oggi
+- id: pioggia_oggi
+  alias: Pioggia di Oggi
+  trigger:
+  - platform: state
+    entity_id: sensor.meteo_openweathermap_forecast_precipitation
+  condition:
+    condition: numeric_state
+    entity_id: sensor.meteo_openweathermap_forecast_precipitation
+    above: input_number.pioggia_oggi
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.pioggia_oggi
+      value: "{{ states('sensor.meteo_openweathermap_forecast_precipitation') |float}}"
+      
+#Pioggia di Ieri
+- id: pioggia_ieri
+  alias: Pioggia di Ieri
+  trigger:
+  - platform: time
+    at: "23:59:00"
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.pioggia_ieri
+      value: "{{ states('sensor.meteo_openweathermap_rain')|float}}"
