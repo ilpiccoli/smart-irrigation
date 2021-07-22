@@ -24,6 +24,18 @@ I found some options but they were either too complex or too grass-oriented (i w
 3) Reboot HomeAssistant;
 4) If you have done everything good you should now have a new automation showed and enabled.
 
+# How does it work?
+1) Every day at 00:00 the sensors of "Rain Today" and "Maximum Temperature Today" is reset;
+2) Every time the rain forecast sensor changes, the "Rain Today" sensor is updated;
+3) Every time the temperature sensor changes, if it's higher than the actual value, the "Maximum Temperature Today" sensor is updated;
+4) When the trigger condition is met (in my case when sun elevation is higher than 35°) the automation starts;
+5) If "Rain Yesterday" is higher than 4mm or "Rain Today" is higher than 2mm the automation **does not run**;
+6) The switch is switched on;
+7) The delay counter starts, based on "Maximum Temperature Yesterday", if T>30 it runs for 3 times the standard time, if T>25 for 2x, if T>20 for the standard time, else (if T<20) it runs for half the standard irrigation time;
+8) The switch is switched off;
+9) The notification is sent to the mobile app.
+10) Every day at 23:59 "Rain Yesterday" gets the value from **effective** (NB: not forecasted) rain from OpenWeatherMap and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
+
 # Known Limitations
 - **The automation is designed to work with only 1 tap/valve;**
     - *Alternative solution: You may just create a group or add multiple switches before and after the delay to run all the taps at the same time, or you can add another   
