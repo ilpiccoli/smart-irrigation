@@ -1,0 +1,7 @@
+- platform: history_stats
+  name: Irrigazione Terrazzo Oggi
+  entity_id: switch.irrigazione_terrazzo
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
