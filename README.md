@@ -8,14 +8,14 @@ I found some options but they were either too complex or too grass-oriented (i w
 
 # Pre-Requisites
 - I use this automation to control my Shelly 1 connected to a normally closed solenoid-valve, when i turn on the Shelly the valve opens. You would need some sort of switch connected to homeassistant you can turn on/open, as you can see it's very simple to modify and adapt this automation to your necessity, as it is straightforward;
-- OpenWeatherMap integration configured and working, you just need to register and get an API, it's very easy, for any information you can [refer to the integration page](https://www.home-assistant.io/integrations/openweathermap/) ;
+- **OpenWeatherMap integration configured and working**, you just need to register and get an API, it's very easy, for any information you can [refer to the integration page](https://www.home-assistant.io/integrations/openweathermap/) ;
 - You would need some helpers, in particular:
-  - An _input_number_ to determine the default duration of irrigation (in my case it's called _input_number.durata_irrigazione_);
-  - An _input_number_ that will be used to record the highest temperature of today (in my case it's called _input_number.temperatura_massima_oggi_ and it has step 1);
-  - An _input_number_ that will be used to record the highest temperature of yesterday (in my case it's called _input_number.temperatura_massima_ieri_ and it has step 1);
-  - An _input_number_ that will be used to record the rain forecast for today (in my case it's called _input_number.pioggia_oggi_ and it has step 0.1);
-  - An _input_number_ that will be used to record the rain precipitation of yesterday (in my case it's called _input_number.pioggia_ieri_ and it has step 0.1).
-- You need an _history_stats_ sensor that will be used in the notification to let you know for how long the switch has been powered on (in my case it's called _sensor.irrigazione_terrazzo_oggi_).
+  - **An _input_number_ to determine the default duration of irrigation** (in my case it's called _input_number.durata_irrigazione_);
+  - **An _input_number_ that will be used to record the highest temperature of today** (in my case it's called _input_number.temperatura_massima_oggi_ and it has step 1);
+  - **An _input_number_ that will be used to record the highest temperature of yesterday** (in my case it's called _input_number.temperatura_massima_ieri_ and it has step 1);
+  - **An _input_number_ that will be used to record the rain forecast for today** (in my case it's called _input_number.pioggia_oggi_ and it has step 0.1);
+  - **An _input_number_ that will be used to record the rain precipitation of yesterday** (in my case it's called _input_number.pioggia_ieri_ and it has step 0.1).
+- You need **an _history_stats_ sensor that will be used in the notification** to let you know for how long the switch has been powered on (in my case it's called _sensor.irrigazione_terrazzo_oggi_).
 
 # Configuration
 0) You need to have the Shelly connected to HomeAssistant (in my case it's called _switch.irrigazione_terrazzo_) and the OpenWeatherMap integration configured;
