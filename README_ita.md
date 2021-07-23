@@ -1,5 +1,5 @@
 ## **Versione in italiano**
-# Smart Irrigation V1.0
+# Irrigazione Smart V1.0
 
 Ho cercato per settimane un'automazione che funzionasse bene ma fosse al tempo stesso semplice per irrigare le piante sul mio terrazzo. Fino ad ora ho usato una centralina di irrigazione a betteria e ha sempre funzionato perfettamente, ma aveva due difetti: 
 1) Non saltava il turno di irrigazione nel caso stia piovendo (o abbia piovuto il giorno prima), quindi nei giorni di pioggia il terrazzo grondava acqua (e sprecavo litri di acqua senza alcun motivo);
@@ -29,7 +29,7 @@ Ho trovato alcune alternative ma erano o troppo complicate o progettate per il g
 2) Ogni volta che il sensore delle previsioni di pioggia cambia, il sensore "Pioggia Oggi" viene aggiornato;
 3) Ogni volta che il sensore temperatura cambia, se è più alto del valore, il valore "Temperatura Massima Oggi" viene aggiornato;
 4) Quanto la condizione "trigger" viene soddisfatta (nel mio caso quando quando il sole è più alto di 35°) l'automazione viene avviata;
-5) Se "Pioggia Ieri" è maggiore di 4mm o "Pioggia Domani" è maggiore di 2mm, l'automazione **non parte**;
+5) Se "Pioggia Ieri" è maggiore di 4mm o "Pioggia Domani" è maggiore di 4mm, l'automazione **non parte**;
 6) L'irrigazione viene avviata;
 7) Il contatore "delay" viene avviato, in base a "Temeperatura Massima Ieri", se T>30 dura 3 volte la durata base, se T>25 per 2 volte, se T>20 per la durata standard, altrimenti (se T<20) dura la metà della durata base;
 8) L'irrigazione viene spenta;
