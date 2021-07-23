@@ -10,7 +10,7 @@
   condition:
   - condition: numeric_state
     entity_id: input_number.pioggia_oggi
-    below: '2'
+    below: '4'
   - condition: numeric_state
     entity_id: input_number.pioggia_ieri
     below: '4'
