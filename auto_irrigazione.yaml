@@ -25,7 +25,7 @@
         {% elif states('input_number.temperatura_massima_ieri')|float > 20 %}
           00:{{states('input_number.durata_irrigazione')|int}}:00
         {% else %}
-          00:{{(states('input_number.durata_irrigazione_default')|int)*0.5}}:00
+          00:{{(states('input_number.durata_irrigazione')|int)*0.5}}:00
         {% endif %}
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_off
