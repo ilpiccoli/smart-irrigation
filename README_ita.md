@@ -13,7 +13,7 @@ Ho trovato alcune alternative ma erano o troppo complicate o progettate per il g
   - **Un _input_number_ per la durata base dell'irrigazione** (nel mio caso si chiama _input_number.durata_irrigazione_);
   - **Un _input_number_ che verrà usato per registrare la temperatura massima di oggi** (nel mio caso si chiama _input_number.temperatura_massima_oggi_ e ha passo 1);
   - **Un _input_number_ che verrà usato per registrare la temperatura massima di ieri** (nel mio caso si chiama _input_number.temperatura_massima_ieri_ e ha passo 1);
-  - **Un _input_number_ che verrà usato per registrare la pioggia prevista per oggi** (nel mio caso si chiama _input_number.pioggia_oggi_ e ha passo 0.1);
+  - **Un _input_number_ che verrà usato per registrare le precipitazioni di oggi** (nel mio caso si chiama _input_number.pioggia_oggi_ e ha passo 0.1);
   - **Un _input_number_ che verrà usato per registrare le precipitazioni di ieri** (nel mio caso si chiama _input_number.pioggia_ieri_ e ha passo 0.1).
 - Avrete bisogno **un sensore _history_stats_ che verrà usato nella notifica** per dirvi per quanto la presa è rimasta accesa la presa (nel mio caso si chiama _sensor.irrigazione_terrazzo_oggi_).
 
@@ -25,8 +25,8 @@ Ho trovato alcune alternative ma erano o troppo complicate o progettate per il g
 5) Se avete fatto tutto correttamente dovreste avere una nuova automazione già attiva.
 
 # Come funziona?
-1) Ogni giorno a 00:00 il sensore "Pioggia Oggi" e "Temperatura Massima Oggi" viene resettato;
-2) Ogni volta che il sensore delle previsioni di pioggia cambia, il sensore "Pioggia Oggi" viene aggiornato;
+1) Ogni giorno a 00:00 il sensore "Pioggia Oggi" e "Temperatura Massima Oggi" vengono resettati;
+2) Ogni ora il sensore "Pioggia Oggi" aumenta il suo valore in base alle precipitazioni dell'ultima ora;
 3) Ogni volta che il sensore temperatura cambia, se è più alto del valore, il valore "Temperatura Massima Oggi" viene aggiornato;
 4) Quanto la condizione "trigger" viene soddisfatta (nel mio caso quando quando il sole è più alto di 35°) l'automazione viene avviata;
 5) Se "Pioggia Ieri" è maggiore di 4mm o "Pioggia Domani" è maggiore di 4mm, l'automazione **non parte**;
@@ -34,7 +34,7 @@ Ho trovato alcune alternative ma erano o troppo complicate o progettate per il g
 7) Il contatore "delay" viene avviato, in base a "Temeperatura Massima Ieri", se T>30 dura 3 volte la durata base, se T>25 per 2 volte, se T>20 per la durata standard, altrimenti (se T<20) dura la metà della durata base;
 8) L'irrigazione viene spenta;
 9) La notifica viene inviata all'app;
-10) Ogni giorno, alle 23:59, copia il valore **effetivo** (NB: non previsto) della pioggia caduta da OpenWeatherMap e "Temperatura Massima Ieri" copia il valore "Temperatura Massima Oggi".
+10) Ogni giorno, alle 23:59, "Pioggia Ieri" copia il valore dal sensore "Pioggia Oggi" e "Temperatura Massima Ieri" copia il valore "Temperatura Massima Oggi".
 
 # Problemi noti
 - **L'automazione è progettata per funzionare con solo 1 irrigatore;**
