@@ -79,7 +79,7 @@
   - service: input_number.set_value
     data_template:
       entity_id: input_number.pioggia_oggi
-      value: "{{ input_number.pioggia_oggi + (states('sensor.meteo_openweathermap_forecast_precipitation') |float)}}"
+      value: "{{ states('input_number.pioggia_oggi')|float + states('sensor.meteo_openweathermap_forecast_precipitation'|float)}}"
       
 #Pioggia di Ieri
 - id: pioggia_ieri
@@ -92,3 +92,7 @@
     data_template:
       entity_id: input_number.pioggia_ieri
       value: "{{ states('sensor.meteo_openweathermap_rain')|float}}"
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.pioggia_oggi
+      value: "0"
