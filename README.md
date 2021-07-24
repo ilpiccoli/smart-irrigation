@@ -1,4 +1,4 @@
-# Smart Irrigation V1.0
+# Smart Irrigation V1.1
 (English version - Versione in Italiano [qui](https://github.com/ilpiccoli/smart-irrigation/blob/main/README_ita.md))
 
 I've been looking for weeks for a good and simple automation to water my plants on my terrace. I've been using a classic battery-powered irrigation control unit and it worked smoothly but it had two main downsides: 
@@ -26,15 +26,15 @@ I found some options but they were either too complex or too grass-oriented (i w
 
 # How does it work?
 1) Every day at 00:00 the sensors of "Rain Today" and "Maximum Temperature Today" is reset;
-2) Every time the rain forecast sensor changes, the "Rain Today" sensor is updated;
+2) Every hour "Rain Today" sensor update its value from "Rain Sensor in last hour" from OpenWeatherMap;
 3) Every time the temperature sensor changes, if it's higher than the actual value, the "Maximum Temperature Today" sensor is updated;
 4) When the trigger condition is met (in my case when sun elevation is higher than 35°) the automation starts;
-5) If "Rain Yesterday" is higher than 4mm or "Rain Today" is higher than 4mm the automation **does not run**;
+5) If "Rain Yesterday" is higher than 4mm or "Rain Forecasted for Today" is higher than 4mm the automation **does not run**;
 6) The switch is switched on;
 7) The delay counter starts, based on "Maximum Temperature Yesterday", if T>30 it runs for 3 times the standard time, if T>25 for 2x, if T>20 for the standard time, else (if T<20) it runs for half the standard irrigation time;
 8) The switch is switched off;
 9) The notification is sent to the mobile app.
-10) Every day at 23:59 "Rain Yesterday" gets the value from **effective** (NB: not forecasted) rain from OpenWeatherMap and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
+10) Every day at 23:59 "Rain Yesterday" gets the value from "rain today" sensor" and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
 
 # Known Limitations
 - **The automation is designed to work with only 1 tap/valve;**
