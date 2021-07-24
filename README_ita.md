@@ -7,7 +7,7 @@ Ho cercato per settimane un'automazione che funzionasse bene ma fosse al tempo s
 Ho trovato alcune alternative ma erano o troppo complicate o progettate per il giardino (irrigo le mie piante da 1 a 3 minuti al giorno, mentre quei programmi mi suggerivano di irrigare per più di 10 minuti al giorno), quindi ho creato questa automazione su HomeAssistant, personalizzabile e molto semplice.
 
 # Pre-Requisiti
-- Uso questa automazione per controllare il mio Shelly 1 connesso ad un'elettrovalvola normalmente chiusa, quando lo Shelly si accende, la valvola si apre. Avrete bisogno di un interruttore/centralina che possiate controllare tramite homeassistant, come vedrete è semplicissimo modificare l'automazione per adattarla alle vostre necessità;
+- Uso questa automazione per controllare il mio [Shelly 1](https://amzn.to/3iJHOZV) connesso ad [un'elettrovalvola normalmente chiusa](https://amzn.to/3iJHOZV), quando lo Shelly si accende, la valvola si apre. Avrete bisogno di un interruttore/centralina che possiate controllare tramite homeassistant, come vedrete è semplicissimo modificare l'automazione per adattarla alle vostre necessità;
 - **L'integrazione OpenWeatherMap configurata e funzionante**, è necessario registrarsi e ottenere un API, è molto semplice, per ogni informazione potete visitare la [pagina dell'integrazione](https://www.home-assistant.io/integrations/openweathermap/) ;
 - Avrete bisogno di alcuni aiutanti, in particolare:
   - **Un _input_number_ per la durata base dell'irrigazione** (nel mio caso si chiama _input_number.durata_irrigazione_);
@@ -41,7 +41,10 @@ Ho trovato alcune alternative ma erano o troppo complicate o progettate per il g
     - *Soluzione alternativa: Potreste creare un gruppo o aggiungere più switch prima e dopo il delay per farli funzionare tutti in contemporanea, oppure potete aggiungere un'altra sequenza accesa-delay-spenta (prima della parte legata alla notifica)*.
     
 - **L'automazione è progettata per irrigare tra 00:00 e 23:59, se l'irrigazione parte prima delle 23:59 e finisce dopo 00:00 l'automazione non funziona correttamente;**        
-    - *Soluzione alternativa: Ci sono molti modi per evitare questo: si deve resettare a un orario diverso e cambiare la configurazione del sensore _history_stats_.*    
+    - *Soluzione alternativa: Ci sono molti modi per evitare questo: si deve resettare a un orario diverso e cambiare la configurazione del sensore _history_stats_.* 
+
+# Come puoi supportarmi?
+Compra attraverso i link che ho lasciato sopra, sono link affiliati ad Amazon, guadagno una piccola percentuale di quello che paghi (a te non costa nulla!), oppure [offrimi un caffè](https://www.buymeacoffee.com/ilpiccoli
     
 - **L'automazione è progettata per irrigare solo una volta al giorno;**    
     - *Soluzione alternativa: potete aggiungere altri trigger per fare partire l'automazione in base ad altri eventi o per avviarla in più orari.*
