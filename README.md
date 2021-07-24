@@ -13,7 +13,7 @@ I found some options but they were either too complex or too grass-oriented (i w
   - **An _input_number_ to determine the default duration of irrigation** (in my case it's called _input_number.durata_irrigazione_);
   - **An _input_number_ that will be used to record the highest temperature of today** (in my case it's called _input_number.temperatura_massima_oggi_ and it has step 1);
   - **An _input_number_ that will be used to record the highest temperature of yesterday** (in my case it's called _input_number.temperatura_massima_ieri_ and it has step 1);
-  - **An _input_number_ that will be used to record the rain forecast for today** (in my case it's called _input_number.pioggia_oggi_ and it has step 0.1);
+  - **An _input_number_ that will be used to record the rain precipitation for today** (in my case it's called _input_number.pioggia_oggi_ and it has step 0.1);
   - **An _input_number_ that will be used to record the rain precipitation of yesterday** (in my case it's called _input_number.pioggia_ieri_ and it has step 0.1).
 - You need **an _history_stats_ sensor that will be used in the notification** to let you know for how long the switch has been powered on (in my case it's called _sensor.irrigazione_terrazzo_oggi_).
 
@@ -26,7 +26,7 @@ I found some options but they were either too complex or too grass-oriented (i w
 
 # How does it work?
 1) Every day at 00:00 the sensors of "Rain Today" and "Maximum Temperature Today" is reset;
-2) Every hour "Rain Today" sensor update its value from "Rain Sensor in last hour" from OpenWeatherMap;
+2) Every hour "Rain Today" sensor update its value adding eventual rain from "Rain Sensor in last hour" from OpenWeatherMap;
 3) Every time the temperature sensor changes, if it's higher than the actual value, the "Maximum Temperature Today" sensor is updated;
 4) When the trigger condition is met (in my case when sun elevation is higher than 35°) the automation starts;
 5) If "Rain Yesterday" is higher than 4mm or "Rain Forecasted for Today" is higher than 4mm the automation **does not run**;
