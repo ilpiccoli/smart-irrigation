@@ -17,16 +17,10 @@
   action:
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_on
-  - delay: >
-        {% if states('input_number.temperatura_massima_ieri')|float > 30 %}
-          00:{{(states('input_number.durata_irrigazione')|int)*3}}:00
-        {% elif states('input.number.temperatura_massima_ieri')|float > 25 %}
-          00:{{(states('input_number.durata_irrigazione')|int)*2}}:00
-        {% elif states('input_number.temperatura_massima_ieri')|float > 20 %}
-          00:{{states('input_number.durata_irrigazione')|int}}:00
-        {% else %}
-          00:{{(states('input_number.durata_irrigazione')|int)*0.5}}:00
-        {% endif %}
+  - delay:
+      minutes: >
+        {% set t = states('input_number.temperatura_massima_ieri') | float %}
+        {{ states('input_number.durata_irrigazione')|int * (3 if t > 29  else 2 if t > 24 else 1 if t > 19 else 0.5) }}
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_off
   - service: notify.mobile_app_iphone_christian
