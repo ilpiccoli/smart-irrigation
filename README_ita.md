@@ -1,5 +1,5 @@
 ## **Versione in italiano**
-# Irrigazione Smart V1.1
+# Irrigazione Smart V1.2
 
 Ho cercato per settimane un'automazione che funzionasse bene ma fosse al tempo stesso semplice per irrigare le piante sul mio terrazzo. Fino ad ora ho usato una centralina di irrigazione a betteria e ha sempre funzionato perfettamente, ma aveva due difetti: 
 1) Non saltava il turno di irrigazione nel caso stia piovendo (o abbia piovuto il giorno prima), quindi nei giorni di pioggia il terrazzo grondava acqua (e sprecavo litri di acqua senza alcun motivo);
