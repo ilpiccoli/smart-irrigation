@@ -14,15 +14,20 @@
   - condition: numeric_state
     entity_id: input_number.pioggia_ieri
     below: '4'
+  - condition: numeric_state
+    entity_id: sensor.meteo_openweathermap_forecast_temperature
+    below: '15'
   action:
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_on
   - delay:
       minutes: >
         {% set t = states('input_number.temperatura_massima_ieri') | float %}
-        {{ states('input_number.durata_irrigazione')|int * (3 if t > 29  else 2 if t > 24 else 1 if t > 19 else 0.5) }}
+        {{ states('input_number.durata_irrigazione')|int * (3 if t > 29  else 2 if t > 24 else 1 if t > 19 else 0) }}
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_off
+  - delay:
+      seconds: '30'
   - service: notify.mobile_app_iphone_christian
     data:
       title: >
@@ -90,3 +95,54 @@
     data_template:
       entity_id: input_number.pioggia_oggi
       value: "0"
+
+#Avviso se non irriga perchè piove
+- id: irrigazione_annullata_pioggia
+  alias: Avviso Mancata Irrigazione per Pioggia
+  description: "Nel caso piova e l'irrigazione automatica sia attiva, avvisa che non ha irrigato"
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 35
+  condition:
+    condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.meteo_openweathermap_forecast_precipitation
+      above: '4'
+    - condition: numeric_state
+      entity_id: input_number.pioggia_ieri
+      above: '4'
+  action:
+  - service: notify.mobile_app_iphone_christian
+    data:
+      title: "{{'\U0001FAB4'}} Irrigazione Terrazzo"
+      message: >
+        Ciclo saltato per pioggia:
+        {% if states('sensor.meteo_openweathermap_forecast_precipitation')|float > 4 %}
+         pioggia prevista per oggi: {{states('sensor.meteo_openweathermap_forecast_precipitation')|float}} mm;
+        {% elif states('input_number.pioggia_ieri')|float > 4 %}
+         pioggia di ieri: {{states('input_number.pioggia_ieri')}} mm;
+        {% endif %}
+      
+#Avviso se non irriga per temperatura
+- id: irrigazione_annullata_gelo
+  alias: Avviso Mancata Irrigazione (Temperatura Bassa)
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 35
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.meteo_openweathermap_forecast_temperature
+      below: '15'
+  action:
+  - service: notify.mobile_app_iphone_christian
+    data:
+      title: "{{'\U0001FAB4'}} Irrigazione Terrazzo"
+      message: >
+        Ciclo irrigazione saltato
+        
+        Temperatura massima prevista per oggi: {{states('sensor.meteo_openweathermap_forecast_temperature')|float}} °C;
