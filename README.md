@@ -1,4 +1,4 @@
-# Smart Irrigation V1.1
+# Smart Irrigation V1.2
 (English version - Versione in Italiano [qui](https://github.com/ilpiccoli/smart-irrigation/blob/main/README_ita.md))
 
 I've been looking for weeks for a good and simple automation to water my plants on my terrace. I've been using a classic battery-powered irrigation control unit and it worked smoothly but it had two main downsides: 
