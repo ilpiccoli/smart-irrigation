@@ -16,7 +16,7 @@
     below: '4'
   - condition: numeric_state
     entity_id: sensor.meteo_openweathermap_forecast_temperature
-    below: '15'
+    above: '15'
   action:
   - entity_id: switch.irrigazione_terrazzo
     service: switch.turn_on
