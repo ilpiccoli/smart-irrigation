@@ -1,13 +1,15 @@
 ## **Versione in italiano**
 # Irrigazione Smart V1.2
 
+NB: Alcuni passaggi non sono aggiornati, soprattutto nel processo di funzionamento (elenco numerato sotto) potrebbero esserci lievi differenze, meglio riferirsi alla versione inglese del readme nel caso di dubbi.
+
 Ho cercato per settimane un'automazione che funzionasse bene ma fosse al tempo stesso semplice per irrigare le piante sul mio terrazzo. Fino ad ora ho usato una centralina di irrigazione a betteria e ha sempre funzionato perfettamente, ma aveva due difetti: 
 1) Non saltava il turno di irrigazione nel caso stia piovendo (o abbia piovuto il giorno prima), quindi nei giorni di pioggia il terrazzo grondava acqua (e sprecavo litri di acqua senza alcun motivo);
 2) Aveva possibilità limitate in fatto di programmazione, ma soprattutto irrigava ogni giorno per lo stesso tempo, indipendentemente dalle condizioni meteo.
 Ho trovato alcune alternative ma erano o troppo complicate o progettate per il giardino (irrigo le mie piante da 1 a 3 minuti al giorno, mentre quei programmi mi suggerivano di irrigare per più di 10 minuti al giorno), quindi ho creato questa automazione su HomeAssistant, personalizzabile e molto semplice.
 
 # Pre-Requisiti
-- Uso questa automazione per controllare il mio [Shelly 1](https://amzn.to/3iJHOZV) connesso ad [un'elettrovalvola normalmente chiusa](https://amzn.to/3iJHOZV), quando lo Shelly si accende, la valvola si apre. Avrete bisogno di un interruttore/centralina che possiate controllare tramite homeassistant, come vedrete è semplicissimo modificare l'automazione per adattarla alle vostre necessità;
+- Uso questa automazione per controllare il mio [Shelly 1](https://amzn.to/3LXmwoV) connesso ad [un'elettrovalvola normalmente chiusa](https://amzn.to/3LXmwoV), quando lo Shelly si accende, la valvola si apre. Avrete bisogno di un interruttore/centralina che possiate controllare tramite homeassistant, come vedrete è semplicissimo modificare l'automazione per adattarla alle vostre necessità;
 - **L'integrazione OpenWeatherMap configurata e funzionante**, è necessario registrarsi e ottenere un API, è molto semplice, per ogni informazione potete visitare la [pagina dell'integrazione](https://www.home-assistant.io/integrations/openweathermap/) ;
 - Avrete bisogno di alcuni aiutanti, in particolare:
   - **Un _input_number_ per la durata base dell'irrigazione** (nel mio caso si chiama _input_number.durata_irrigazione_);
