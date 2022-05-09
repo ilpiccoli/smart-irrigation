@@ -7,7 +7,7 @@ I've been looking for weeks for a good and simple automation to water my plants 
 I found some options but they were either too complex or too grass-oriented (i water my plants for about 1 to 3 minutes per day, while those programs suggested me to water for more than 10 minutes/day), so i developed myself a very simple and customizable automation in HomeAssistant.
 
 # Pre-Requisites
-- I use this automation to control my [Shelly 1](https://www.amazon.it/Shelly-interruttore-Wireless-domestica-applicazione/dp/B07G33LNDY/ref=sr_1_5?__mk_it_IT=ÅMÅŽÕÑ&crid=36AFNYHR9YB0Q&keywords=shelly%2B1&qid=1652098650&sprefix=shelly%2B1%2Caps%2C93&sr=8-5&th=1) connected to a [normally closed solenoid-valve](https://amzn.to/3kRymqb), when i turn on the Shelly the valve opens. You would need some sort of switch connected to homeassistant you can turn on/open, as you can see it's very simple to modify and adapt this automation to your necessity, as it is straightforward;
+- I use this automation to control my [Shelly 1](https://amzn.to/38fAwMi) connected to a [normally closed solenoid-valve](https://amzn.to/3LXmwoV), when i turn on the Shelly the valve opens. You would need some sort of switch connected to homeassistant you can turn on/open, as you can see it's very simple to modify and adapt this automation to your necessity, as it is straightforward;
 - **OpenWeatherMap integration configured and working**, you just need to register and get an API, it's very easy, for any information you can [refer to the integration page](https://www.home-assistant.io/integrations/openweathermap/) ;
 - You would need some helpers, in particular:
   - **An _input_number_ to determine the default duration of irrigation** (in my case it's called _input_number.durata_irrigazione_);
