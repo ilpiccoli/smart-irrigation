@@ -26,15 +26,17 @@ I found some options but they were either too complex or too grass-oriented (i w
 
 # How does it work?
 1) Every day at 00:00 the sensors of "Rain Today" and "Maximum Temperature Today" is reset;
-2) Every hour "Rain Today" sensor update its value adding eventual rain from "Rain Sensor in last hour" from OpenWeatherMap;
+2) Every hour "Rain Today" sensor updates its value adding eventual rain from "Rain Sensor in last hour" from OpenWeatherMap;
 3) Every time the temperature sensor changes, if it's higher than the actual value, the "Maximum Temperature Today" sensor is updated;
-4) When the trigger condition is met (in my case when sun elevation is higher than 35°) the automation starts;
-5) If "Rain Yesterday" is higher than 4mm or "Rain Forecasted for Today" is higher than 4mm the automation **does not run**;
+4) When the trigger condition is met (in my case 2 hours after sunrise) the automation starts;
+5) If "Rain Yesterday" is higher than 4mm or "Rain Forecasted for Today" is higher than 4mm the automation **does not run** and a notification is sent;
+5b) If "Maximum Temperature Yesterday" is below 17°C the automation **does not run** and a notification is sent;
 6) The switch is switched on;
 7) The delay counter starts, based on "Maximum Temperature Yesterday", if T>30 it runs for 3 times the standard time, if T>25 for 2x, if T>20 for the standard time, else (if T<20) it runs for half the standard irrigation time;
 8) The switch is switched off;
-9) The notification is sent to the mobile app.
-10) Every day at 23:59 "Rain Yesterday" gets the value from "rain today" sensor" and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
+9) A 30s timer starts, to let "history stats" sensor update;
+10) The notification is sent to the mobile app.
+11) Every day at 23:59 "Rain Yesterday" gets the value from "rain today" sensor" and "Maximum Temperature Yesterday" gets the value from "Maximum Temperature Today"
 
 # Known Limitations
 - **The automation is designed to work with only 1 tap/valve;**
@@ -46,9 +48,6 @@ I found some options but they were either too complex or too grass-oriented (i w
     
 - **The automation is designed to start only 1 time per day;**    
     - *Alternative solution: you can add multiple triggers to trigger it based on various events or on multiple hours.*  
-    
-- **The automation is designed to start when sun is over 35°, as my terrace is west-oriented and the sun hits the plants when the sun elevation is >40°;**    
-    - *Alternative solution: you can choose another trigger type, for example based on time, on event or any other trigger type.*
 
 # How can you support me?
 Buy through the links above, those are Amazon Affiliates Links, i get a percent from the total amount of what you spend (and you do not pay for this!), or [buy me a coffee](https://www.buymeacoffee.com/ilpiccoli)
